@@ -67,7 +67,7 @@ app.post("/api/whqf", async (req, res) => {
   }
   res.send({
     code: 323,
-    data: await { count: Counter.count, foo: Counter.foo },
+    data: await Counter.findAll(),
   });
 });
 
