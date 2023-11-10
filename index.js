@@ -33,26 +33,6 @@ app.post("/api/count", async (req, res) => {
   });
 });
 
-app.post("/api/whqf", async (req, res) => {
-  const { action, foo } = req.body;
-  if (action === "inc") {
-    await Counter.create();
-  } else if (action === "clear") {
-    await Counter.destroy({
-      truncate: true,
-    });
-  }
-  else {
-    await Counter.create({ count: Number(action) || 80, foo: foo });
-  }
-  res.send({
-    code: 323,
-    data: await { count: Counter.count, foo: Counter.foo },
-  });
-});
-
-
-
 // 获取计数
 app.get("/api/count", async (req, res) => {
   const result = await Counter.count();
@@ -70,7 +50,7 @@ app.get("/api/wx_openid", async (req, res) => {
 });
 
 app.get("/api/whqf", async (req, res) => {
-  //res.send({ name: 'whqf', value: "芜湖起飞" });
+  res.send({ name: 'whqf', value: "芜湖起飞" });
 });
 
 app.post("/api/whqf", async (req, res) => {
