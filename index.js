@@ -61,7 +61,7 @@ app.get("/api/whqf", async (req, res) => {
 });
 
 app.get("/api/photos", async (req, res) => {
-  let id = Number(req.params.id);
+  let id = Number(req.query.id);
   if(!id) id=0;
   res.send(imgs[id]);
 });
