@@ -5,7 +5,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
-const { init: initDB, Counter } = require("./db.cjs");
+import {  init as initDB, Counter } from "./db.js";
 
 const logger = morgan("tiny");
 
