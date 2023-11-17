@@ -6,7 +6,7 @@ const __filenameNew = fileURLToPath(import.meta.url)
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import imgs from "./b64img.js";
+import {imgs} from "./b64img.js";
 
 import {  init as initDB, Counter } from "./db.js";
 
