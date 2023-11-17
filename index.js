@@ -1,7 +1,10 @@
-const path = require("path");
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+import { renderToString } from 'vue/server-renderer';
+import { createSSRApp } from 'vue'
+import path from "path";
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+
 const { init: initDB, Counter } = require("./db");
 
 const logger = morgan("tiny");
@@ -51,6 +54,44 @@ app.get("/api/wx_openid", async (req, res) => {
 
 app.get("/api/whqf", async (req, res) => {
   res.send({ name: 'whqf', value: "芜湖起飞" });
+});
+
+app.get("/api/vue", async (req, res) => {
+  const createApp = () => {
+    return createSSRApp({
+      data: () => ({ count: 1 }),
+      template: `<div style='background-color:red;width:500px;height:500px;' @click="count--"><button @click="count++">{{ count }}</button></div><button @click="count++">{{ count }}</button>`
+    })
+  };
+  const app = createApp();
+  renderToString(app).then((html) => {
+    res.send(`
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Vue SSR Example</title>
+      <script type="importmap">
+        {
+          "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+      </script>
+      <script type="module">
+      import { createSSRApp } from 'vue'
+createSSRApp({
+  data: () => ({ count: 1 }),
+  template: '<div style="background-color:red;width:500px;height:500px;" @click="count--"><button @click="count++">{{ count }}</button></div><button @click="count++">{{ count }}</button>'
+}).mount('#app');
+console.log('1234');
+      </script>
+    </head>
+    <body>
+      <div id="app">${html}</div>
+    </body>
+  </html>
+  `);
+  });
 });
 
 app.post("/api/whqf", async (req, res) => {
