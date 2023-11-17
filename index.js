@@ -1,6 +1,8 @@
 import { renderToString } from 'vue/server-renderer';
 import { createSSRApp } from 'vue'
 import path from "path";
+import { fileURLToPath } from 'url';
+const __filenameNew = fileURLToPath(import.meta.url)
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -8,6 +10,7 @@ import morgan from "morgan";
 import {  init as initDB, Counter } from "./db.js";
 
 const logger = morgan("tiny");
+const __dirname = path.dirname(__filenameNew);
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
