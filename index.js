@@ -6,6 +6,7 @@ const __filenameNew = fileURLToPath(import.meta.url)
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import imgs from "./b64img";
 
 import {  init as initDB, Counter } from "./db.js";
 
@@ -57,6 +58,12 @@ app.get("/api/wx_openid", async (req, res) => {
 
 app.get("/api/whqf", async (req, res) => {
   res.send({ name: 'whqf', value: "芜湖起飞" });
+});
+
+app.get("/api/photos", async (req, res) => {
+  let id = Number(req.params.id);
+  if(!id) id=0;
+  res.send(imgs[id]);
 });
 
 app.get("/api/vue", async (req, res) => {
